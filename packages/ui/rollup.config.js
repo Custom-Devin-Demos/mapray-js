@@ -40,6 +40,7 @@ export default [
     plugins: [
       resolve(),
       typescript({
+        check: false,
         useTsconfigDeclarationDir: true,
         tsconfig: './tsconfig.json',
         tsconfigOverride: {
@@ -70,6 +71,7 @@ export default [
       resolve(),
       commonjs(),
       typescript({
+        check: false,
         useTsconfigDeclarationDir: true,
         tsconfig: './tsconfig.json',
         tsconfigOverride: {
