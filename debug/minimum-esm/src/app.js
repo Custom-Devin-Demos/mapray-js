@@ -24,6 +24,15 @@ class App extends maprayui.StandardUIViewer {
 
         // Add a text entity for Tokyo Tower
         this._addTextEntity();
+
+        // Add pin markers at landmarks
+        this._addPinMarkers();
+
+        // Draw route line connecting landmarks
+        this._addRouteLine();
+
+        // Update page title
+        document.title = "Tokyo Landmarks Tour";
     }
 
     _addTextEntity() {
@@ -47,6 +56,54 @@ class App extends maprayui.StandardUIViewer {
         text_entity3.setColor( [0.2, 1.0, 0.4] );
         text_entity3.setFontSize( 26 );
         this.viewer.scene.addEntity( text_entity3 );
+
+        const skytreeText = new mapray.TextEntity( this.viewer.scene );
+        const skytreePos = new mapray.GeoPoint( 139.8107, 35.7101, 634 );
+        skytreeText.addText( "Tokyo Skytree", skytreePos, {
+            color: [1.0, 0.85, 0.0],
+            font_size: 28
+        });
+        this.viewer.scene.addEntity( skytreeText );
+    }
+
+    _addPinMarkers() {
+        const pins = new mapray.PinEntity( this.viewer.scene );
+
+        // Tokyo Tower
+        pins.addPin( new mapray.GeoPoint( 139.745433, 35.658581 ), {
+            bg_color: [0.9, 0.2, 0.2]
+        });
+
+        // Ginza
+        pins.addPin( new mapray.GeoPoint( 139.7649, 35.6717 ), {
+            bg_color: [0.9, 0.2, 0.2]
+        });
+
+        // Shinjuku
+        pins.addPin( new mapray.GeoPoint( 139.699985, 35.690777 ), {
+            bg_color: [0.9, 0.2, 0.2]
+        });
+
+        // Tokyo Skytree
+        pins.addPin( new mapray.GeoPoint( 139.8107, 35.7101 ), {
+            bg_color: [0.9, 0.2, 0.2]
+        });
+
+        this.viewer.scene.addEntity( pins );
+    }
+
+    _addRouteLine() {
+        const route = new mapray.MarkerLineEntity( this.viewer.scene );
+        route.setColor( [0.9, 0.2, 0.9] );
+        route.setLineWidth( 5 );
+        const routePoints = [
+            139.745433, 35.658581, 0,  // Tokyo Tower
+            139.7649,   35.6717,   0,  // Ginza
+            139.699985, 35.690777, 0,  // Shinjuku
+            139.8107,   35.7101,   0   // Tokyo Skytree
+        ];
+        route.addPoints( routePoints );
+        this.viewer.scene.addEntity( route );
     }
 }
 export default App;
